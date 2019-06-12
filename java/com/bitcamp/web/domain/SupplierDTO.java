@@ -4,12 +4,12 @@ import lombok.Data;
 
 @Data
 public class SupplierDTO {
-    private String supplier_id,
-                    supplier_name,
-                    contact_name,
+    private String supplierId,
+                    supplierName,
+                    contactName,
                     address,
                     city,
-                    postal_code,
+                    postalCode,
                     country,
                     phone;
 }

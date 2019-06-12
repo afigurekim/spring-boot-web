@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class CustomerDTO {
-    private String customer_id,
-                    customer_name,
+    private String customerId,
+                    customerName,
                     password,
                     ssn,
                     phone,

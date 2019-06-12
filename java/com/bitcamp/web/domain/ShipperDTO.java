@@ -4,7 +4,7 @@ import lombok.Data;
 
 @Data
 public class ShipperDTO {
-    private String shipper_id,
-                    shipper_name,
+    private String shipperId,
+                    shipperName,
                     phone;
 }
