@@ -1,8 +1,8 @@
-var app = (function(){
-    let init = function(){
+var app = (() => {
+    let init = () => {
         login_form();
     }
-    let login_form = function(){
+    let login_form = () => {
         let wrapper = document.querySelector('#wrapper');
         wrapper.innerHTML = '<form action="/action_page.php">'
         +'  First name:<br>'
@@ -15,11 +15,11 @@ var app = (function(){
         +'  <input id="join_btn" type="submit" value="회원가입">'
         +'</form> ';
         let join_btn = document.querySelector('#join_btn');
-        join_btn.addEventListener('click', function(){
+        join_btn.addEventListener('click', () => {
             join_form();
         });
     }
-    let join_form = function(){
+    let join_form = () => {
         let wrapper = document.querySelector('#wrapper');
         wrapper.innerHTML = '<form>'
         +'	ID<br>'
@@ -36,7 +36,7 @@ var app = (function(){
         +'	<input id="reset_btn" type="reset" value="취소">'
         +'</form>';
         let ok_btn = document.querySelector('#ok_btn');
-        ok_btn.addEventListener('click', function() {
+        ok_btn.addEventListener('click', () => {
             login_form();
         });
     };
