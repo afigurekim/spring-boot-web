@@ -3,7 +3,7 @@ var app = (function(){
         login_form();
     }
     let login_form = function(){
-        var wrapper = document.querySelector('#wrapper');
+        let wrapper = document.querySelector('#wrapper');
         wrapper.innerHTML = '<form action="/action_page.php">'
         +'  First name:<br>'
         +'  <input type="text" name="firstname" value="Mickey">'
@@ -11,18 +11,16 @@ var app = (function(){
         +'  Last name:<br>'
         +'  <input type="text" name="lastname" value="Mouse">'
         +'  <br><br>'
-        +'  <input id="btn1" type="submit" value="로그인">'
-        +'  <input id="btn2" type="submit" value="회원가입">'
+        +'  <input id="login_btn" type="submit" value="로그인">'
+        +'  <input id="join_btn" type="submit" value="회원가입">'
         +'</form> ';
-    
-        var btn2 = document.querySelector('#btn2');
-    
-        btn2.addEventListener('click', function(){
+        let join_btn = document.querySelector('#join_btn');
+        join_btn.addEventListener('click', function(){
             join_form();
         });
     }
     let join_form = function(){
-        //var wrapper = document.querySelector('#wrapper');
+        let wrapper = document.querySelector('#wrapper');
         wrapper.innerHTML = '<form>'
         +'	ID<br>'
         +'	<input type="text" name="id"><br>'
@@ -34,13 +32,11 @@ var app = (function(){
         +'	<input type="password" name="ssn"><br>'
         +'	전화번호<br>'
         +'	<input type="text" name="phone"><br><br>'
-        +'	<input id="btn3" type="submit" value="확인">'
-        +'	<input id="btn4" type="reset" value="취소">'
+        +'	<input id="ok_btn" type="submit" value="확인">'
+        +'	<input id="reset_btn" type="reset" value="취소">'
         +'</form>';
-    
-        var btn3 = document.querySelector('#btn3');
-    
-        btn3.addEventListener('click', function() {
+        let ok_btn = document.querySelector('#ok_btn');
+        ok_btn.addEventListener('click', function() {
             login_form();
         });
     };
