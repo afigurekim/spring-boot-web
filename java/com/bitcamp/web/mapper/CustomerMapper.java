@@ -14,5 +14,6 @@ public interface CustomerMapper {
     public CustomerDTO selectCustomerById(String customerId);
     public void updateCustomer(CustomerDTO customer);
     public void deleteCustomer(CustomerDTO customer);
+    public int selectCount();
     
 }

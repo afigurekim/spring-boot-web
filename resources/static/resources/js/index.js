@@ -4,21 +4,41 @@ var app = (() => {
     }
     let login_form = () => {
         let wrapper = document.querySelector('#wrapper');
-        wrapper.innerHTML = '<form action="/action_page.php">'
+        wrapper.innerHTML = '<form>'
         +'  First name:<br>'
         +'  <input type="text" name="firstname" value="Mickey">'
         +'  <br>'
         +'  Last name:<br>'
         +'  <input type="text" name="lastname" value="Mouse">'
         +'  <br><br>'
-        +'  <input id="login_btn" type="submit" value="로그인">'
-        +'  <input id="join_btn" type="submit" value="회원가입">'
+        +'  <input id="login_btn" type="button" value="로그인">'
+        +'  <input id="join_btn" type="button" value="회원가입">'
         +'</form> ';
+        document.querySelector("#login_btn").addEventListener('click', () => {
+            alert('로그인 버튼 클릭');
+            count();
+        });
         let join_btn = document.querySelector('#join_btn');
         join_btn.addEventListener('click', () => {
             join_form();
         });
     }
+
+    let count = () => {
+        let xhr = new XMLHttpRequest();
+        method = 'GET';
+        url = 'count';
+        xhr.open(method, url, true);
+        xhr.onreadystatechange = () => {
+            if(xhr.readyState === 4 && xhr.status === 200){
+                alert('성공');
+                let wrapper = document.querySelector('#wrapper');
+                wrapper.innerHTML = '총 고객수 : <h1>'+xhr.responseText+'</h1>';
+            }
+        }
+        xhr.send();
+    }
+
     let join_form = () => {
         let wrapper = document.querySelector('#wrapper');
         wrapper.innerHTML = '<form>'
@@ -32,7 +52,7 @@ var app = (() => {
         +'	<input type="password" name="ssn"><br>'
         +'	전화번호<br>'
         +'	<input type="text" name="phone"><br><br>'
-        +'	<input id="ok_btn" type="submit" value="확인">'
+        +'	<input id="ok_btn" type="button" value="확인">'
         +'	<input id="reset_btn" type="reset" value="취소">'
         +'</form>';
         let ok_btn = document.querySelector('#ok_btn');
