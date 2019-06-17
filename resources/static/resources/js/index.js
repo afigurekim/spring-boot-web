@@ -6,17 +6,44 @@ var app = (() => {
         let wrapper = document.querySelector('#wrapper');
         wrapper.innerHTML = '<form>'
         +'  First name:<br>'
-        +'  <input type="text" name="firstname" value="Mickey">'
+        +'  <input type="text" id="customerId" name="customerId">'
         +'  <br>'
         +'  Last name:<br>'
-        +'  <input type="text" name="lastname" value="Mouse">'
+        +'  <input type="text" id="password" name="password">'
         +'  <br><br>'
         +'  <input id="login_btn" type="button" value="로그인">'
         +'  <input id="join_btn" type="button" value="회원가입">'
         +'</form> ';
         document.querySelector("#login_btn").addEventListener('click', () => {
             alert('로그인 버튼 클릭');
-            count();
+            id = document.getElementById('customerId').value;
+            pass = document.getElementById('password').value;
+            let xhr = new XMLHttpRequest(),
+                method = 'GET',
+                url = 'login/'+id+'/'+pass; //URL을 통한 통신이 제일 빠름
+                xhr.open(method, url, true);
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState === 4 && xhr.status === 200){
+                        let d = xhr.responseText;
+                        if(d === 'SUCCESS'){
+                            document.querySelector('#wrapper').innerHTML = '<h1>마이페이지</h1>';
+                        }else{
+                            alert('로그인 실패');
+                            let wrapper = document.querySelector('#wrapper');
+                            wrapper.innerHTML = '<form>'
+                            +'  First name:<br>'
+                            +'  <input type="text" id="customerId" name="customerId">'
+                            +'  <br>'
+                            +'  Last name:<br>'
+                            +'  <input type="text" id="password" name="password">'
+                            +'  <br><br>'
+                            +'  <input id="login_btn" type="button" value="로그인">'
+                            +'  <input id="join_btn" type="button" value="회원가입">'
+                            +'</form> ';
+                        }
+                    }
+                };
+                xhr.send();
         });
         let join_btn = document.querySelector('#join_btn');
         join_btn.addEventListener('click', () => {
@@ -59,6 +86,21 @@ var app = (() => {
         ok_btn.addEventListener('click', () => {
             login_form();
         });
-    };
+    }
+
+    let login = () => {
+        let xhr = new XMLHttpRequest();
+        method = 'GET';
+        url = 'login';
+        xhr.open(method, url, true);
+        xhr.onreadystatechange = () => {
+            if(xhr.readyState === 4 && xhr.status === 200){
+                alert('성공');
+                document.querySelector('#wrapper').innerHTML = '<h1>'+xhr.responseText+'</h1>'
+            }
+        }
+        xhr.send();
+    }
+
     return {init : init};
 })();

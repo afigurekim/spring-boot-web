@@ -22,11 +22,17 @@
   </select>
   <select id="selectCustomersByOption" resultMap="customerMap" 
     parameterType="com.bitcamp.web.domain.CustomerDTO">
-    select * from CUSTOMERS where CUSTOMER_NAME = #{customerName}
+    select * from CUSTOMERS where CUSTOMER_NAME LIKE #{customerName}
   </select>
   <select id="selectCustomerById" resultMap="customerMap" 
     parameterType="string">
-    select * from CUSTOMERS where CUSTOMER_ID = #{value}
+    select * from CUSTOMERS where CUSTOMER_ID LIKE #{value}
+  </select>
+  <select id="login" resultMap="customerMap" 
+    parameterType="com.bitcamp.web.domain.CustomerDTO">
+    select * from CUSTOMERS 
+    where CUSTOMER_ID LIKE #{customerId} 
+      and PASSWORD LIKE #{password}
   </select>
   <select id="selectCount" resultType="int">
     select count(*) as count from CUSTOMERS
@@ -39,9 +45,9 @@
         CITY = #{city}, 
         ADDRESS = #{address}, 
         POSTALCODE = #{postalcode} 
-    where CUSTOMER_ID = #{customerId}
+    where CUSTOMER_ID LIKE #{customerId}
   </update>
   <delete id="deleteCustomer" parameterType="com.bitcamp.web.domain.CustomerDTO">
-    delete from CUSTOMERS where CUSTOMER_ID = #{customerId}
+    delete from CUSTOMERS where CUSTOMER_ID LIKE #{customerId}
   </delete>
 </mapper>
