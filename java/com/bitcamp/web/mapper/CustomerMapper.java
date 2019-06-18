@@ -16,5 +16,4 @@ public interface CustomerMapper {
     public void deleteCustomer(CustomerDTO customer);
     public int selectCount();
     public CustomerDTO login(CustomerDTO customer);
-    
 }
