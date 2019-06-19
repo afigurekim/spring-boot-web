@@ -28,10 +28,6 @@ public class CustomerController {
 
     @PostMapping("")
     public HashMap<String,Object> join(@RequestBody CustomerDTO param) {
-        System.out.println("=====post mapping=====");
-        System.out.println(param.getCustomerId());
-        System.out.println(param.getPassword());
-        System.out.println(param.getCustomerName());
         customerService.addCustomer(param);
         HashMap<String, Object> map = new HashMap<>();
         map.put("result", "SUCCESS");
@@ -60,9 +56,6 @@ public class CustomerController {
 
     @PutMapping("/{customerId}")
     public HashMap<String, Object> updateCustomer(@RequestBody CustomerDTO customer) {
-        System.out.println("-----PUT Mapping-----");
-        System.out.println(customer.getCustomerId());
-        System.out.println(customer.getCity());
         customerService.updateCustomer(customer);
         HashMap<String, Object> map = new HashMap<>();
         map.put("result", "SUCCESS");

@@ -30,9 +30,9 @@ function init() {
 }
 function join_form() {
     return '<form>'
-        + '	ID<br>'
+        + '	아이디<br>'
         + '	<input type="text" id="customerId" name="customerId"><br>'
-        + '	PW<br>'
+        + '	비밀번호<br>'
         + '	<input type="password" id="password" name="password"><br>'
         + '	이름<br>'
         + '	<input type="text" id="customerName" name="customerName"><br>'
@@ -82,10 +82,10 @@ function join() {
 }
 function login_form() {
     return '<form>'
-        + '  ID:<br>'
+        + '  아이디:<br>'
         + '  <input type="text" id="customerId" name="customerId">'
         + '  <br>'
-        + '  PW:<br>'
+        + '  비밀번호:<br>'
         + '  <input type="password" id="password" name="password">'
         + '  <br><br>'
         + '  <input id="login_btn" type="button" value="로그인">'
@@ -130,9 +130,9 @@ function mypage_form(x) {
     let temp = x;
     return '<h1>마이페이지</h1>'
         + ' <form>'
-        + '	<h4>ID</h4>'
+        + '	<h4>아이디</h4>'
         + '	<span id="customerId" name="customerId">'+temp.customerId+'</span><br>'
-        + '	<h4>PW</h4>'
+        + '	<h4>비밀번호</h4>'
         + '	<input type="text" id="password" name="password" value="'+temp.password+'"><br>'
         + '	<h4>이름</h4>'
         + '	<input type="text" id="customerName" name="customerName" value="'+temp.customerName+'"><br>'
@@ -154,9 +154,9 @@ function mypage_form(x) {
 function mypage(x) {
     let temp = x;
     return '<h1>마이페이지</h1>'
-            + '	<h4>ID</h4>'
+            + '	<h4>아이디</h4>'
             + '	<span id="customerId" name="customerId">'+temp.customerId+'</span><br>'
-            + '	<h4>PW</h4>'
+            + '	<h4>비밀번호</h4>'
             + '	<span id="password" name="password">'+temp.password+'</span><br>'
             + '	<h4>이름</h4>'
             + '	<span id="customerName" name="customerName">'+temp.customerName+'</span><br>'
