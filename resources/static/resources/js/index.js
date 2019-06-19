@@ -82,11 +82,11 @@ function join() {
 }
 function login_form() {
     return '<form>'
-        + '  First name:<br>'
+        + '  ID:<br>'
         + '  <input type="text" id="customerId" name="customerId">'
         + '  <br>'
-        + '  Last name:<br>'
-        + '  <input type="text" id="password" name="password">'
+        + '  PW:<br>'
+        + '  <input type="password" id="password" name="password">'
         + '  <br><br>'
         + '  <input id="login_btn" type="button" value="로그인">'
         + '  <input id="join_btn" type="button" value="회원가입">'
@@ -131,13 +131,13 @@ function mypage_form(x) {
     return '<h1>마이페이지</h1>'
         + ' <form>'
         + '	<h4>ID</h4>'
-        + '	<span>'+temp.customerId+'</span><input type="hidden" id="customerId" name="customerId" value="'+temp.customerId+'"><br>'
+        + '	<span id="customerId" name="customerId">'+temp.customerId+'</span><br>'
         + '	<h4>PW</h4>'
         + '	<input type="text" id="password" name="password" value="'+temp.password+'"><br>'
         + '	<h4>이름</h4>'
         + '	<input type="text" id="customerName" name="customerName" value="'+temp.customerName+'"><br>'
         + '	<h4>주민번호</h4>'
-        + '	<span>'+temp.ssn+'</span><input type="hidden" id="ssn" name="ssn" value="'+temp.ssn+'"><br>'
+        + '	<span id="ssn" name="ssn">'+temp.ssn+'</span><br>'
         + '	<h4>전화번호</h4>'
         + '	<input type="text" id="phone" name="phone" value="'+temp.phone+'"><br>'
         + '	<h4>도시</h4>'
@@ -154,27 +154,25 @@ function mypage_form(x) {
 function mypage(x) {
     let temp = x;
     return '<h1>마이페이지</h1>'
-            + ' <form>'
             + '	<h4>ID</h4>'
-            + '	<span>'+temp.customerId+'</span><input type="hidden" id="customerId" name="customerId" value="'+temp.customerId+'"><br>'
+            + '	<span id="customerId" name="customerId">'+temp.customerId+'</span><br>'
             + '	<h4>PW</h4>'
-            + '	<span>'+temp.password+'</span><br>'
+            + '	<span id="password" name="password">'+temp.password+'</span><br>'
             + '	<h4>이름</h4>'
-            + '	<span>'+temp.customerName+'</span><br>'
+            + '	<span id="customerName" name="customerName">'+temp.customerName+'</span><br>'
             + '	<h4>주민번호</h4>'
-            + '	<span>'+temp.ssn+'</span><br>'
+            + '	<span id="ssn" name="ssn">'+temp.ssn+'</span><br>'
             + '	<h4>전화번호</h4>'
-            + '	<span>'+temp.phone+'</span><br>'
+            + '	<span id="phone" name="phone">'+temp.phone+'</span><br>'
             + '	<h4>도시</h4>'
-            + '	<span>'+temp.city+'</span><br>'
+            + '	<span id="city" name="city">'+temp.city+'</span><br>'
             + '	<h4>주소</h4>'
-            + '	<span>'+temp.address+'</span><br>'
+            + '	<span id="address" name="address">'+temp.address+'</span><br>'
             + '	<h4>우편번호</h4>'
-            + '	<span>'+temp.postalcode+'</span><br>'
+            + '	<span id="postalcode" name="postalcode">'+temp.postalcode+'</span><br>'
             + '	<br>'
             + '	<input id="update_btn" type="button" value="수정">'
-            + '	<input id="delete_btn" type="button" value="삭제">'
-            + '</form>';
+            + '	<input id="delete_btn" type="button" value="탈퇴">';
 }
 function count() {
     let xhr = new XMLHttpRequest();
@@ -188,13 +186,13 @@ function count() {
     xhr.send();
 }
 function update(){
-    let customerId = document.getElementById('customerId').value;
+    let customerId = document.getElementById('customerId').innerText;
     let xhr = new XMLHttpRequest();
     let data = {
-        customerId: document.getElementById('customerId').value,
+        customerId: document.getElementById('customerId').innerText,
         customerName: document.getElementById('customerName').value,
         password: document.getElementById('password').value,
-        ssn: document.getElementById('ssn').value,
+        ssn: document.getElementById('ssn').innerText,
         phone: document.getElementById('phone').value,
         city: document.getElementById('city').value,
         address: document.getElementById('address').value,
@@ -206,7 +204,7 @@ function update(){
         if(xhr.readyState === 4 && xhr.status === 200){
             let d = JSON.parse(xhr.responseText);
             if(d.result === 'SUCCESS'){
-                $wrapper.innerHTML = customer.login();
+                $wrapper.innerHTML = customer.mypage(data);
             }else{
                 
             }
@@ -226,7 +224,7 @@ function remove(x){
         if(xhr.readyState === 4 && xhr.status === 200){
             let d = JSON.parse(xhr.responseText);
             if(d.result === 'SUCCESS'){
-                alert(customerId+' 계정 삭제 완료');
+                alert(customerId+'님의 탈퇴가 완료되었습니다');
                 app.init();
             }else{
                 
