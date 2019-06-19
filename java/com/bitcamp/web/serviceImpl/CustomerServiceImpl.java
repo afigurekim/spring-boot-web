@@ -21,7 +21,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public List<CustomerDTO> findCustomers() {
-        return null;
+        return customerMapper.selectCustomers();
     }
 
     @Override
@@ -31,12 +31,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO findCustomerById(String customerId) {
-        return null;
+        return customerMapper.selectCustomerById(customerId);
     }
 
     @Override
-    public void updateCustomer(CustomerDTO customer) {
-        customerMapper.updateCustomer(customer);
+    public int updateCustomer(CustomerDTO customer) {
+        return customerMapper.updateCustomer(customer);
     }
 
     @Override

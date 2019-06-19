@@ -1,6 +1,8 @@
 package com.bitcamp.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.bitcamp.web.domain.CustomerDTO;
@@ -34,6 +36,22 @@ public class CustomerController {
         return map;
     }
 
+    @GetMapping("")
+    public List<CustomerDTO> list() {
+        List<CustomerDTO> list = new ArrayList<>();
+        for (CustomerDTO customers : customerService.findCustomers()) {
+            System.out.println(customers.getCustomerId()+" : "
+                            +customers.getCustomerName()+" : "
+                            +customers.getPassword()+" : "
+                            +customers.getSsn()+" : "
+                            +customers.getPhone()+" : "
+                            +customers.getCity()+" : "
+                            +customers.getAddress()+" : "
+                            +customers.getPostalcode());
+        }
+        return list;
+    }
+
     @GetMapping("/count")
     public String count() {
         System.out.println("CustomerController count() 경로로 들어옴");
@@ -50,20 +68,25 @@ public class CustomerController {
     }
 
     @GetMapping("/{customerId}")
-    public CustomerDTO getCustomer() {
-        return customer;
+    public CustomerDTO getCustomer(@PathVariable String customerId) {
+        System.out.println("ID 검색 진입 : "+customerId);
+        return customerService.findCustomerById(customerId);
     }
 
     @PutMapping("/{customerId}")
-    public HashMap<String, Object> updateCustomer(@RequestBody CustomerDTO customer) {
-        customerService.updateCustomer(customer);
-        HashMap<String, Object> map = new HashMap<>();
-        map.put("result", "SUCCESS");
-        return map;
+    public CustomerDTO updateCustomer(@RequestBody CustomerDTO customer) {
+        int res = customerService.updateCustomer(customer);
+        if(res == 1){
+            customer = customerService.findCustomerById(customer.getCustomerId());
+        }else{
+            System.out.println("update 컨트롤러 실패");
+        }
+        return customer;
     }
 
     @DeleteMapping("/{customerId}")
-    public HashMap<String, Object> deleteCustomer(@RequestBody CustomerDTO customer) {
+    public HashMap<String, Object> deleteCustomer(@PathVariable String customerId) {
+        customer.setCustomerId(customerId);
         customerService.deleteCustomer(customer);
         HashMap<String, Object> map = new HashMap<>();
         map.put("result", "SUCCESS");

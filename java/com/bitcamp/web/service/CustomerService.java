@@ -12,7 +12,7 @@ public interface CustomerService {
     public List<CustomerDTO> findCustomers();
     public List<CustomerDTO> findCustomersByOption(CustomerDTO option);
     public CustomerDTO findCustomerById(String customerId);
-    public void updateCustomer(CustomerDTO customer);
+    public int updateCustomer(CustomerDTO customer);
     public void deleteCustomer(CustomerDTO customer);
     public int countAll();
     public CustomerDTO login(CustomerDTO customer);
