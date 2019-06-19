@@ -36,12 +36,12 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public void updateCustomer(CustomerDTO customer) {
-
+        customerMapper.updateCustomer(customer);
     }
 
     @Override
     public void deleteCustomer(CustomerDTO customer) {
-
+        customerMapper.deleteCustomer(customer);
     }
 
     @Override
@@ -51,8 +51,6 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public CustomerDTO login(CustomerDTO customer) {
-        System.out.println("컨트롤러에서 넘어온 ID: "+customer.getCustomerId());
-        System.out.println("컨트롤러에서 넘어온 PW: "+customer.getPassword());
         return customerMapper.login(customer);
     }
 

@@ -9,9 +9,11 @@ import com.bitcamp.web.service.CustomerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +26,19 @@ public class CustomerController {
     @Autowired CustomerService customerService;
     @Autowired CustomerDTO customer;
 
-    @RequestMapping("/count")
+    @PostMapping("")
+    public HashMap<String,Object> join(@RequestBody CustomerDTO param) {
+        System.out.println("=====post mapping=====");
+        System.out.println(param.getCustomerId());
+        System.out.println(param.getPassword());
+        System.out.println(param.getCustomerName());
+        customerService.addCustomer(param);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("result", "SUCCESS");
+        return map;
+    }
+
+    @GetMapping("/count")
     public String count() {
         System.out.println("CustomerController count() 경로로 들어옴");
         int count = customerService.countAll();
@@ -39,13 +53,25 @@ public class CustomerController {
         return customerService.login(customer);
     }
 
-    @PostMapping("")
-    public HashMap<String,Object> join(@RequestBody CustomerDTO param) {
-        System.out.println("=====post mapping=====");
-        System.out.println(param.getCustomerId());
-        System.out.println(param.getPassword());
-        System.out.println(param.getCustomerName());
-        customerService.addCustomer(param);
+    @GetMapping("/{customerId}")
+    public CustomerDTO getCustomer() {
+        return customer;
+    }
+
+    @PutMapping("/{customerId}")
+    public HashMap<String, Object> updateCustomer(@RequestBody CustomerDTO customer) {
+        System.out.println("-----PUT Mapping-----");
+        System.out.println(customer.getCustomerId());
+        System.out.println(customer.getCity());
+        customerService.updateCustomer(customer);
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("result", "SUCCESS");
+        return map;
+    }
+
+    @DeleteMapping("/{customerId}")
+    public HashMap<String, Object> deleteCustomer(@RequestBody CustomerDTO customer) {
+        customerService.deleteCustomer(customer);
         HashMap<String, Object> map = new HashMap<>();
         map.put("result", "SUCCESS");
         return map;
