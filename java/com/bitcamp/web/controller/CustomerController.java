@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bitcamp.web.common.util.Printer;
 import com.bitcamp.web.domain.CustomerDTO;
 import com.bitcamp.web.mapper.CustomerMapper;
 import com.bitcamp.web.service.CustomerService;
@@ -28,6 +29,8 @@ public class CustomerController {
     @Autowired CustomerService customerService;
     @Autowired CustomerDTO customer;
 
+    @Autowired Printer p;
+
     @PostMapping("")
     public HashMap<String,Object> join(@RequestBody CustomerDTO param) {
         customerService.addCustomer(param);
@@ -39,16 +42,16 @@ public class CustomerController {
     @GetMapping("")
     public List<CustomerDTO> list() {
         List<CustomerDTO> list = new ArrayList<>();
-        for (CustomerDTO customers : customerService.findCustomers()) {
-            System.out.println(customers.getCustomerId()+" : "
-                            +customers.getCustomerName()+" : "
-                            +customers.getPassword()+" : "
-                            +customers.getSsn()+" : "
-                            +customers.getPhone()+" : "
-                            +customers.getCity()+" : "
-                            +customers.getAddress()+" : "
-                            +customers.getPostalcode());
-        }
+        // for (Map<?,?> customers : customerService.findCustomers()) {
+        //     System.out.println(customers.getCustomerId()+" : "
+        //                     +customers.getCustomerName()+" : "
+        //                     +customers.getPassword()+" : "
+        //                     +customers.getSsn()+" : "
+        //                     +customers.getPhone()+" : "
+        //                     +customers.getCity()+" : "
+        //                     +customers.getAddress()+" : "
+        //                     +customers.getPostalcode());
+        // }
         return list;
     }
 
@@ -56,7 +59,7 @@ public class CustomerController {
     public String count() {
         System.out.println("CustomerController count() 경로로 들어옴");
         int count = customerService.countAll();
-        System.out.println("고객의 총인원 : "+count);
+        p.accept("람다가 출력한 고객의 총인원 : "+count);
         return count+"";
     }
 

@@ -16,12 +16,56 @@ var customer = {
 };
 var employee = {
     login: login,
+    customer_list_form: customer_list_form,
     customer_list: customer_list,
     admin_login: admin_login
 };
 var session = {
     set_value: set_value,
     get_value: get_value
+}
+//customerId, customerName, ssn, phone, city
+function customer_list_form(){
+    return '<h2>고객 목록</h2>'
+    +'<table>'
+    +'  <tr>'
+    +'    <th>아이디</th>'
+    +'    <th>고객명</th>'
+    +'    <th>주민번호</th>'
+    // +'    <th>전화번호</th>'
+    // +'    <th>도시</th>'
+    +'  </tr>'
+    +'  <tr>'
+    +'    <td>Alfreds Futterkiste</td>'
+    +'    <td>Maria Anders</td>'
+    +'    <td>Germany</td>'
+    +'  </tr>'
+    +'  <tr>'
+    +'    <td>Centro comercial Moctezuma</td>'
+    +'    <td>Francisco Chang</td>'
+    +'    <td>Mexico</td>'
+    +'  </tr>'
+    +'  <tr>'
+    +'    <td>Ernst Handel</td>'
+    +'    <td>Roland Mendel</td>'
+    +'    <td>Austria</td>'
+    +'  </tr>'
+    +'  <tr>'
+    +'    <td>Island Trading</td>'
+    +'    <td>Helen Bennett</td>'
+    +'    <td>UK</td>'
+    +'  </tr>'
+    +'  <tr>'
+    +'    <td>Laughing Bacchus Winecellars</td>'
+    +'    <td>Yoshi Tannamuri</td>'
+    +'    <td>Canada</td>'
+    +'  </tr>'
+    +'  <tr>'
+    +'    <td>Magazzini Alimentari Riuniti</td>'
+    +'    <td>Giovanni Rovelli</td>'
+    +'    <td>Italy</td>'
+    +'  </tr>'
+    +'</table>'
 }
 function set_value(x){
     sessionStorage.setItem(x.name, x.value);
@@ -70,8 +114,8 @@ function customer_list(){
     xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8;');
     xhr.onload = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            let d = JSON.parse(xhr.responseText);
-            
+            // let d = JSON.parse(xhr.responseText);
+            $wrapper.innerHTML = employee.customer_list_form();
         }
     };
     xhr.send();

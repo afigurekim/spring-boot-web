@@ -1,6 +1,7 @@
 package com.bitcamp.web.serviceImpl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.bitcamp.web.domain.CustomerDTO;
 import com.bitcamp.web.mapper.CustomerMapper;
@@ -20,8 +21,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public List<CustomerDTO> findCustomers() {
-        return customerMapper.selectCustomers();
+    public List<CustomerDTO> findCustomers(Map<?,?> param) {
+        return customerMapper.selectCustomers(param);
     }
 
     @Override
