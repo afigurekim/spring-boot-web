@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.bitcamp.web.common.util.PageProxy;
 import com.bitcamp.web.common.util.Printer;
 import com.bitcamp.web.domain.CustomerDTO;
 import com.bitcamp.web.mapper.CustomerMapper;
@@ -30,6 +31,7 @@ public class CustomerController {
     @Autowired CustomerDTO customer;
 
     @Autowired Printer p;
+    @Autowired PageProxy pxy;
 
     @PostMapping("")
     public HashMap<String,Object> join(@RequestBody CustomerDTO param) {
@@ -39,20 +41,17 @@ public class CustomerController {
         return map;
     }
 
-    @GetMapping("")
-    public List<CustomerDTO> list() {
-        List<CustomerDTO> list = new ArrayList<>();
-        // for (Map<?,?> customers : customerService.findCustomers()) {
-        //     System.out.println(customers.getCustomerId()+" : "
-        //                     +customers.getCustomerName()+" : "
-        //                     +customers.getPassword()+" : "
-        //                     +customers.getSsn()+" : "
-        //                     +customers.getPhone()+" : "
-        //                     +customers.getCity()+" : "
-        //                     +customers.getAddress()+" : "
-        //                     +customers.getPostalcode());
-        // }
-        return list;
+    @GetMapping("/page/{pageNum}")
+    public HashMap<String, Object> list(@PathVariable String pageNum) {
+        HashMap<String, Object> map = new HashMap<>();
+        map.put("totalCount", customerService.countAll());
+        map.put("page_num", pageNum);
+        map.put("page_size", "5");
+        map.put("block_size", "5");
+        pxy.execute(map);
+        map.put("list", customerService.findCustomers(pxy));
+        map.put("pxy", pxy);
+        return map;
     }
 
     @GetMapping("/count")

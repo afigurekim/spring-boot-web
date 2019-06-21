@@ -32,39 +32,11 @@ function customer_list_form(){
     +'    <th>아이디</th>'
     +'    <th>고객명</th>'
     +'    <th>주민번호</th>'
-    // +'    <th>전화번호</th>'
-    // +'    <th>도시</th>'
+    +'    <th>전화번호</th>'
+    +'    <th>도시</th>'
     +'  </tr>'
-    +'  <tr>'
-    +'    <td>Alfreds Futterkiste</td>'
-    +'    <td>Maria Anders</td>'
-    +'    <td>Germany</td>'
-    +'  </tr>'
-    +'  <tr>'
-    +'    <td>Centro comercial Moctezuma</td>'
-    +'    <td>Francisco Chang</td>'
-    +'    <td>Mexico</td>'
-    +'  </tr>'
-    +'  <tr>'
-    +'    <td>Ernst Handel</td>'
-    +'    <td>Roland Mendel</td>'
-    +'    <td>Austria</td>'
-    +'  </tr>'
-    +'  <tr>'
-    +'    <td>Island Trading</td>'
-    +'    <td>Helen Bennett</td>'
-    +'    <td>UK</td>'
-    +'  </tr>'
-    +'  <tr>'
-    +'    <td>Laughing Bacchus Winecellars</td>'
-    +'    <td>Yoshi Tannamuri</td>'
-    +'    <td>Canada</td>'
-    +'  </tr>'
-    +'  <tr>'
-    +'    <td>Magazzini Alimentari Riuniti</td>'
-    +'    <td>Giovanni Rovelli</td>'
-    +'    <td>Italy</td>'
-    +'  </tr>'
+    +'  <tbody id="tbody">'
+    +'  </tbody>'
     +'</table>'
 }
 function set_value(x){
@@ -100,7 +72,7 @@ function admin_login(){
     if(isAdmin){
         let pass = prompt('관리자 번호를 입력하세요');
         if(pass == 1000){
-            employee.customer_list();
+            employee.customer_list('1');
         }else{
             alert('입력한 번호가 일치하지 않습니다.');
         }
@@ -108,14 +80,63 @@ function admin_login(){
         alert('관리자만 접속이 가능합니다.');
     }
 }
-function customer_list(){
+function create_customer_row(x){
+    return '<tr><td>'+x.customerId+'</td><td>'+x.customerName+'</td><td>'
+            +x.ssn+'</td><td>'+x.phone+'</td><td>'+x.city+'</td></tr>';
+}
+function customer_list(x){
     let xhr = new XMLHttpRequest();
-    xhr.open('GET', 'customers', true);
+    xhr.open('GET', 'customers/page/'+x, true);
     xhr.setRequestHeader('Content-type', 'application/json;charset=utf-8;');
     xhr.onload = () => {
         if (xhr.readyState === 4 && xhr.status === 200) {
-            // let d = JSON.parse(xhr.responseText);
+            let d = JSON.parse(xhr.responseText);
             $wrapper.innerHTML = employee.customer_list_form();
+            let tbody = document.getElementById('tbody');
+            let i = 0;
+            d.list.forEach((v, i) => {
+                tbody.innerHTML += create_customer_row(v);
+            });
+            let blocks = document.createElement('div');
+            blocks.setAttribute('id', 'blocks');
+            wrapper.appendChild(blocks);
+            let spans = document.createElement('div');
+            i = 1;
+            for(;i<6;i++){
+                let span = document.createElement('span');
+                span.setAttribute('style', 'display:inline-block;padding-right:20px;border: 1px solid black;cursor:pointer');
+                span.setAttribute('class', 'page-num');
+                span.innerHTML = i;
+                if(x == span.innerHTML){
+                    span.style.backgroundColor = 'red';
+                }
+                spans.appendChild(span);
+                
+            }
+            blocks.appendChild(spans);
+            let clss = document.getElementsByClassName('page-num');
+            i = 0;
+            for(;i<clss.length;i++){
+                (function(i){
+                    clss[i].addEventListener('click',function(){
+                        customer_list(this.innerText)
+                    })
+                })(i)
+            }
+            spans.appendChild(span);
+            
+            if(d.pxy.existPrev){
+                let prevBlock = document.createElement('span');
+                prevBlock.setAttribute('style','display:inline-block;padding-right:20px;border: 1px solid black;');
+                prevBlock.textContent="<";
+                blocks.prepend(prevBlock);
+            }
+            if(d.pxy.existNext){
+                let nextBlock = document.createElement('span');
+                nextBlock.setAttribute('style','display:inline-block;padding-right:20px;border: 1px solid black;');
+                nextBlock.textContent=">";
+                blocks.appendChild(nextBlock);
+            }
         }
     };
     xhr.send();
