@@ -101,8 +101,11 @@ function customer_list(x){
             blocks.setAttribute('id', 'blocks');
             wrapper.appendChild(blocks);
             let spans = document.createElement('div');
-            i = 1;
-            for(;i<6;i++){
+            i = (Math.ceil(x*1/5)-1)*5+1;
+            let t = i+5;
+            let tc = Math.ceil(d.pxy.totalCount*1/d.pxy.pageSize);
+            if(tc<t){t=tc+1};
+            for(;i<t;i++){
                 let span = document.createElement('span');
                 span.setAttribute('style', 'display:inline-block;padding-right:20px;border: 1px solid black;cursor:pointer');
                 span.setAttribute('class', 'page-num');
@@ -119,23 +122,31 @@ function customer_list(x){
             for(;i<clss.length;i++){
                 (function(i){
                     clss[i].addEventListener('click',function(){
-                        customer_list(this.innerText)
+                        customer_list(this.innerText);
                     })
                 })(i)
             }
-            spans.appendChild(span);
-            
+            let p = (Math.ceil(x*1/5)-2)*5+1;
+            let n = Math.ceil(x*1/5)*5+1;
             if(d.pxy.existPrev){
                 let prevBlock = document.createElement('span');
-                prevBlock.setAttribute('style','display:inline-block;padding-right:20px;border: 1px solid black;');
+                prevBlock.setAttribute('id', 'back-arrow');
+                prevBlock.setAttribute('style','display:inline-block;padding-right:20px;border: 1px solid black;cursor:pointer');
                 prevBlock.textContent="<";
                 blocks.prepend(prevBlock);
+                document.getElementById('back-arrow').addEventListener('click', () => {
+                    customer_list(p);
+                });
             }
             if(d.pxy.existNext){
                 let nextBlock = document.createElement('span');
-                nextBlock.setAttribute('style','display:inline-block;padding-right:20px;border: 1px solid black;');
+                nextBlock.setAttribute('id', 'forward-arrow');
+                nextBlock.setAttribute('style','display:inline-block;padding-right:20px;border: 1px solid black;cursor:pointer');
                 nextBlock.textContent=">";
                 blocks.appendChild(nextBlock);
+                document.getElementById('forward-arrow').addEventListener('click', () => {
+                    customer_list(n);
+                });
             }
         }
     };
@@ -225,6 +236,7 @@ function login(x) {
                     employee.customer_list();
                 }
             } else {
+                alert('ID/PW 확인해주세요');
                 $wrapper.innerHTML = customer.login_form();
             }
         }

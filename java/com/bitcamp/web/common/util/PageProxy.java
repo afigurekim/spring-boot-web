@@ -20,7 +20,7 @@ public class PageProxy {
 
     public void execute(Map<?,?> paramMap){
         // Dim-1 Row scalar count
-        int totalCount = Integer.parseInt(String.valueOf(paramMap.get("totalCount")));
+        totalCount = Integer.parseInt(String.valueOf(paramMap.get("totalCount")));
 
         // Dim-2 Page scarlar info
         String _pageNum = (String)paramMap.get("page_num");
@@ -31,18 +31,26 @@ public class PageProxy {
         // int totalCount = customerService.countAll();
         int nmg = totalCount % pageSize;
         int pageCount = (nmg == 0) ? totalCount / pageSize : totalCount / pageSize + 1;
-        int addRow = pageSize * (pageNum - 1);
-        int startRow = 1 + addRow;
-        int maxRow = pageSize + addRow;
-        int endRow = (maxRow > totalCount) ? totalCount : maxRow;
+        startRow = pageSize * (pageNum - 1);
+        endRow = (pageSize * pageNum > totalCount) ? totalCount : pageSize * pageNum;
 
         // Dim-3 Block scalar info
         String _blockSize = (String)paramMap.get("block_size");
         blockSize = (_blockSize == null) ? 5 : Integer.parseInt(_blockSize);
         int blockNum = (pageNum - 1) / blockSize;
 
-        existPrev = (startPage - pageSize) > 0;
-        existNext = (startPage + pageSize) <= pageCount;
+        int newStart = startPage;
+        //System.out.println(Math.ceil((double)pageNum/(double)5) + " : " + (int)((double)startPage/(double)5));
+        if((int)(Math.ceil((double)pageNum/(double)5)) > (int)(Math.ceil((double)startPage/(double)5))){
+            newStart = ((int)Math.ceil((double)pageNum/(double)5)-1)*5+1;
+        }else if((int)(Math.ceil((double)pageNum/(double)5)) < (int)(Math.ceil((double)startPage/(double)5))){
+            newStart = ((int)Math.ceil((double)pageNum/(double)5)-2)*5+1;
+        }
+        
+        existPrev = (newStart - pageSize) > 0;
+        System.out.println("newStart("+newStart+") - pageSize("+pageSize+") = " + (newStart - pageSize));
+        existNext = (newStart + pageSize) <= pageCount;
+        System.out.println("newStart("+newStart+") + pageSize("+pageSize+") = " + (newStart + pageSize));
 
         startPage = (existPrev) ? blockNum * blockSize + 1 : 1;
         endPage = (endPage > pageCount) ? pageCount : startPage + (blockSize - 1);
